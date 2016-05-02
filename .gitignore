@@ -1,0 +1,9 @@
+*
+!.gitignore
+!TheVerseLauncher/
+!TheVerseLauncher/libs
+!TheVerseLauncher/src
+!TheVerseLauncher/libs/*
+!TheVerseLauncher/src/*
+!TheVerseLauncher/libs/.gitignore
+!TheVerseLauncher/src/.gitignore
