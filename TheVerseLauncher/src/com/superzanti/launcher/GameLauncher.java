@@ -54,6 +54,7 @@ public class GameLauncher extends Thread{
 			e.printStackTrace();
 		}
         
+        System.setProperty("user.dir", System.getProperty("user.dir") + "/" + "data" + "/" + ".minecraft/");
         launchframe.setInfoText("Creating Minecraft process");
 		
 		ProcessBuilder pb = null;

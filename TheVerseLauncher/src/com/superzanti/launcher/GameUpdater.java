@@ -30,7 +30,7 @@ public class GameUpdater extends Thread {
     public void run() {
     	String localPath, remotePath;
 	    
-	    localPath = "./data/.minecraft";
+	    localPath = ".";
         remotePath = "https://github.com/superzanti/TheVerse.git";
         
         try {
