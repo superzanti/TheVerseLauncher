@@ -65,3 +65,4 @@ The libs folder will be automatically included in the build source. You should b
 - [ ] Email is autoselected
 - [ ] Add some sort of progress indicator for the git pull and downloading assets
 - [ ] Add the username image when the user autologs in
+- [ ] Font for the password field on mac looks stupid
