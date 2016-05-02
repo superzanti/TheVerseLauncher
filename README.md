@@ -53,7 +53,7 @@ All of the above dependencies are included in the repository to make sure versio
 
 The libs folder will be automatically included in the build source. You should be able to click the 'TheVerseLauncher > src > com.superzanti.launcher' then click run and have the application pop up.
 
-## TODO
+### TODO
 ---
 - [x] Create a decent readme
 - [x] Integrate git functionality
