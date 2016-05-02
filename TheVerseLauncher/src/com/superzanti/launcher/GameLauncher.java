@@ -1,6 +1,7 @@
 package com.superzanti.launcher;
 
 import java.io.BufferedReader;
+import java.io.File;
 import java.io.IOException;
 import java.io.InputStreamReader;
 
@@ -54,7 +55,7 @@ public class GameLauncher extends Thread{
 			e.printStackTrace();
 		}
         
-        System.setProperty("user.dir", System.getProperty("user.dir") + "/" + "data" + "/" + ".minecraft/");
+        //System.setProperty("user.dir", System.getProperty("user.dir") + "/" + "data" + "/" + ".minecraft/");
         launchframe.setInfoText("Creating Minecraft process");
 		
 		ProcessBuilder pb = null;
@@ -67,6 +68,7 @@ public class GameLauncher extends Thread{
 		}
         pb.redirectErrorStream(true);
         Process proc = null;
+        pb.directory(new File("./data/.minecraft/"));
 		try {
 			proc = pb.start();
 		} catch (IOException e) {

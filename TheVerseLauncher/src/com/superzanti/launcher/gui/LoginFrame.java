@@ -189,7 +189,7 @@ public class LoginFrame extends Frame {
 					e.printStackTrace();
 				}
 			}
-		} catch (Exception e) {
+		} catch (Throwable e) {
 			e.printStackTrace();
 			setTexts("Loading", "Failed to login to existing profile");
 		}
