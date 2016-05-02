@@ -45,7 +45,7 @@ All of the above dependencies are included in the repository to make sure versio
 ### Building in eclipse
 ---
 1. Run a "git clone https://github.com/superzanti/TheVerseLauncher.git" from a directory (we will call it 'workspace')
-2. Open eclipse and set workspace as your workspace.
+2. Open eclipse and set workspace to workspace/TheVerseLauncher.
 3. Click File > New > Java Project.
 4. Set 'TheVerseLauncher' as the project name.
     * The default location should now say ./workspace/TheVerseLauncher
