@@ -81,7 +81,7 @@ public class GameUpdater extends Thread {
 
 		config.save();
 		
-		git.checkout().setName("master").call();
+		git.checkout().setName("master").setCreateBranch(true).call();
 		
 		git.add().addFilepattern("*").call();
 
