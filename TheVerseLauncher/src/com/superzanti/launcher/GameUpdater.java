@@ -48,7 +48,6 @@ public class GameUpdater extends Thread {
         
         while(true){
 	        try {
-	        	System.out.println("starting git");
 				doPull(remotePath, localPath);
 				break;
 			} catch (Throwable e) {
@@ -63,7 +62,6 @@ public class GameUpdater extends Thread {
     
     private void doPull(String fromRepoPath, String toRepoPath) throws WrongRepositoryStateException, InvalidConfigurationException, DetachedHeadException, InvalidRemoteException, CanceledException, RefNotFoundException, RefNotAdvertisedException, NoHeadException, TransportException, GitAPIException, IOException{
 		
-    	System.out.println("1");
 		FileRepositoryBuilder builder = new FileRepositoryBuilder();
 		Repository repository = builder.setGitDir(new File(toRepoPath + "/.git"))
 		  .readEnvironment()
@@ -76,7 +74,6 @@ public class GameUpdater extends Thread {
 		Git.init().setDirectory(gitrepo).call();
 
 		StoredConfig config = git.getRepository().getConfig();
-		config.setString("core", "origin", "sparsecheckout", "true");
 		config.setString("remote", "origin", "fetch", "+refs/heads/*:refs/remotes/origin/*");
 		config.setString("remote", "origin", "url", fromRepoPath);
 		config.setString("branch", "master", "remote", "origin");
