@@ -81,7 +81,11 @@ public class GameUpdater extends Thread {
 
 		config.save();
 		
-		git.checkout().setName("master").setCreateBranch(true).call();
+		try{
+			git.checkout().setName("master").setCreateBranch(true).setForce(true).call();
+		}catch(Throwable e){
+			//no big deal, it already exists.
+		}
 		
 		git.add().addFilepattern("*").call();
 
