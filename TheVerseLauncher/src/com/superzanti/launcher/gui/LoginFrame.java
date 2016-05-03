@@ -31,7 +31,6 @@ import javax.swing.JLabel;
 import javax.swing.JScrollPane;
 import javax.swing.JTextArea;
 import javax.swing.SwingConstants;
-import javax.swing.Timer;
 import javax.swing.text.DefaultCaret;
 
 import com.superzanti.launcher.GameLauncher;
