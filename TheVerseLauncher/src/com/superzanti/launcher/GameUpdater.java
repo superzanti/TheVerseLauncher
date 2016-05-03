@@ -74,10 +74,10 @@ public class GameUpdater extends Thread {
 		Git.init().setDirectory(gitrepo).call();
 
 		StoredConfig config = git.getRepository().getConfig();
-		//config.setString("remote", "origin", "fetch", "+refs/heads/*:refs/remotes/origin/*");
+		config.setString("remote", "origin", "fetch", "+refs/heads/*:refs/remotes/origin/*");
 		config.setString("remote", "origin", "url", fromRepoPath);
 		config.setString("branch", "master", "remote", "origin");
-		//config.setString("branch", "master", "merge", "refs/heads/master");
+		config.setString("branch", "master", "merge", "refs/heads/master");
 
 		config.save();
 		
