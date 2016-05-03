@@ -2,14 +2,18 @@ package com.superzanti.launcher;
 
 import java.io.File;
 import java.io.IOException;
+import java.io.OutputStream;
+import java.io.OutputStreamWriter;
+import java.io.PrintStream;
 import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.util.HashSet;
 import java.util.Iterator;
 import java.util.Set;
+import java.util.logging.SimpleFormatter;
+import java.util.logging.StreamHandler;
 
 import org.eclipse.jgit.api.Git;
-import org.eclipse.jgit.api.PullCommand;
 import org.eclipse.jgit.api.ResetCommand.ResetType;
 import org.eclipse.jgit.api.Status;
 import org.eclipse.jgit.api.StatusCommand;
@@ -28,12 +32,36 @@ import org.eclipse.jgit.lib.StoredConfig;
 import org.eclipse.jgit.lib.TextProgressMonitor;
 import org.eclipse.jgit.storage.file.FileRepositoryBuilder;
 
+import com.superzanti.launcher.gui.LoginFrame;
+
+import sk.tomsik68.mclauncher.api.common.MCLauncherAPI;
+
 public class GameUpdater extends Thread {
+	
+	private LoginFrame launchframe = null;
 
     public GameUpdater() {
     }
+    
+    public void setFrame(LoginFrame frame) {
+    	launchframe = frame;
+    }
 
     public void run() {
+    	PrintStream printStream = new PrintStream(new OutputStream()
+		{
+			@Override
+	        public void write(int b) throws IOException {
+				launchframe.setInfoText(String.valueOf((char)b));
+			}
+		});
+		System.setOut(printStream);
+		System.setErr(printStream);
+		//Logger log = Logger.getLogger(MCLauncherAPI.class.getName());
+		SimpleFormatter fmt = new SimpleFormatter();
+		StreamHandler sh = new StreamHandler(System.out, fmt);
+		MCLauncherAPI.log.addHandler(sh);
+		
     	String localPath, remotePath;
 	    
 	    localPath = ".";
@@ -48,6 +76,7 @@ public class GameUpdater extends Thread {
         
         while(true){
 	        try {
+	        	System.out.println("BUUUUTS");
 				doPull(remotePath, localPath);
 				break;
 			} catch (Throwable e) {
@@ -90,7 +119,7 @@ public class GameUpdater extends Thread {
 		git.add().addFilepattern("*").call();
 
 		//get progress monitor
-		git.fetch().setProgressMonitor(new TextProgressMonitor()).call();
+		git.fetch().setThin(true).setProgressMonitor(new TextProgressMonitor(new OutputStreamWriter(System.out))).call();
 
 		git.reset().setMode( ResetType.HARD ).setRef("origin/master").call();
 		
@@ -122,8 +151,11 @@ public class GameUpdater extends Thread {
 		}
 		git.clean().setPaths(files).setIgnore(false).setCleanDirectories(true).setDryRun(true).call();
 		
-		PullCommand a = git.pull();
-		a.call();
+		git.pull().setProgressMonitor(new TextProgressMonitor(new OutputStreamWriter(System.out))).call();
+		
+		//reset one more time incase of deletes.
+		git.reset().setMode( ResetType.HARD ).setRef("origin/master").call();
+		
 		git.close();
 	}
     

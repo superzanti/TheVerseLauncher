@@ -25,9 +25,14 @@ import java.nio.file.StandardCopyOption;
 import java.net.URL;
 
 import javax.imageio.ImageIO;
+import javax.swing.BorderFactory;
 import javax.swing.ImageIcon;
 import javax.swing.JLabel;
+import javax.swing.JScrollPane;
+import javax.swing.JTextArea;
 import javax.swing.SwingConstants;
+import javax.swing.Timer;
+import javax.swing.text.DefaultCaret;
 
 import com.superzanti.launcher.GameLauncher;
 import com.superzanti.launcher.GameUpdater;
@@ -47,7 +52,8 @@ public class LoginFrame extends Frame {
 	private PasswordField passwordField;
 	private JLabel formTitle;
 	private JLabel formSubtitle;
-	private JLabel launchinfo;
+	private JTextArea launchinfo;
+	private JScrollPane msgScroller;
 	private Button logoutButton;
 	private Button submitButton;
 	ISession session = null;
@@ -86,12 +92,36 @@ public class LoginFrame extends Frame {
 		formSubtitle.setFont(robotoLight.deriveFont(15f));
 		panel.add(formSubtitle);
 		
-		launchinfo = new JLabel("<html><center>Loading...</center></html>", SwingConstants.CENTER);
+		launchinfo = new JTextArea();
+		launchinfo.setText("Loading...");
 		launchinfo.setForeground(Color.WHITE);
-		launchinfo.setBounds(25, HEIGHT-200, WIDTH-50, 150);
 		launchinfo.setFont(robotoLight.deriveFont(15f));
-		panel.add(launchinfo);
-		launchinfo.setVisible(false);
+		launchinfo.setOpaque(false);
+		launchinfo.setLineWrap(true);
+		launchinfo.setWrapStyleWord(true);
+		launchinfo.setEditable(false);
+		
+		msgScroller = new JScrollPane();        
+		msgScroller.setBounds(25, HEIGHT-200, WIDTH-50, 150);
+		msgScroller.setFont(robotoLight.deriveFont(15f));
+		//msgScroller.setForeground(Color.WHITE);
+		msgScroller.setViewportView(launchinfo);
+		msgScroller.getViewport().setOpaque(false);
+		msgScroller.setOpaque(false);
+		msgScroller.setBorder(BorderFactory.createEmptyBorder());
+		msgScroller.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_NEVER);
+		msgScroller.setHorizontalScrollBarPolicy(JScrollPane.HORIZONTAL_SCROLLBAR_NEVER);
+		msgScroller.setWheelScrollingEnabled(true);
+		
+		DefaultCaret caret = (DefaultCaret)launchinfo.getCaret();
+		caret.setUpdatePolicy(DefaultCaret.ALWAYS_UPDATE);
+		//launchinfo.setEditorKit(new WrapEditorKit());
+		//StyledDocument doc = launchinfo.getStyledDocument();
+		//SimpleAttributeSet center = new SimpleAttributeSet();
+		//StyleConstants.setAlignment(center, StyleConstants.ALIGN_CENTER);
+		//doc.setParagraphAttributes(0, doc.getLength(), center, false);
+		msgScroller.setVisible(false);
+		panel.add(msgScroller);
 		
 		emailField = new TextField("Email");
 		emailField.setBounds(WIDTH/12, HEIGHT-200, (int) (WIDTH/1.2), 36);
@@ -160,10 +190,10 @@ public class LoginFrame extends Frame {
 		    		emailField.setVisible(false);
 		    		passwordField.setVisible(false);
 		    		submitButton.setVisible(false);
-		    		launchinfo.setVisible(true);
-		    		GameLauncher launcher;
-		    		launcher = new GameLauncher(session, frame, updater);
-		    		launcher.start();
+		    		msgScroller.setVisible(true);
+		            GameLauncher launcher = null;
+		            launcher = new GameLauncher(session, frame, updater);
+		            launcher.start();
 		    		setTexts("Launching", "Please wait for Forge to launch...");
 		    	}
 		    }
@@ -215,11 +245,14 @@ public class LoginFrame extends Frame {
 	
 	public void setTexts(String maintext, String subtext){
 		formTitle.setText(maintext);
-		formSubtitle.setText(subtext);
+	    formSubtitle.setText(subtext);
 	}
 	
 	public void setInfoText(String line){
-		launchinfo.setText("<html><center>" + line + "</center></html>");
+	    if ((line != null) && (!line.isEmpty())){
+	    	launchinfo.append(line);
+	    	launchinfo.setCaretPosition(launchinfo.getDocument().getLength());
+	    }
 	}
 	
 	private void downloadFromUrl(String loc, String localFilename) throws IOException {

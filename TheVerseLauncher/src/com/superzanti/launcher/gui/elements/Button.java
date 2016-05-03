@@ -18,6 +18,7 @@ public class Button extends JButton {
 		setFont(Utils.getRobotoLight().deriveFont(20f));
 		setBorder(new LineBorder(new Color(26, 154, 54), 4));
 		setText(text);
+		setOpaque(true);
 	}
 	
 	public Button(String text, Color bg, Color color) {

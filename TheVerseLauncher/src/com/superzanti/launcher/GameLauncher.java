@@ -4,10 +4,15 @@ import java.io.BufferedReader;
 import java.io.File;
 import java.io.IOException;
 import java.io.InputStreamReader;
+import java.io.OutputStream;
+import java.io.PrintStream;
+import java.util.logging.SimpleFormatter;
+import java.util.logging.StreamHandler;
 
 import com.superzanti.launcher.gui.LoginFrame;
 
 import sk.tomsik68.mclauncher.api.common.ILaunchSettings;
+import sk.tomsik68.mclauncher.api.common.MCLauncherAPI;
 import sk.tomsik68.mclauncher.api.login.ISession;
 import sk.tomsik68.mclauncher.backend.MinecraftLauncherBackend;
 import sk.tomsik68.mclauncher.impl.common.Platform;
@@ -26,6 +31,20 @@ public class GameLauncher extends Thread{
     }
 
     public void run() {
+    	PrintStream printStream = new PrintStream(new OutputStream()
+		{
+			@Override
+	        public void write(int b) throws IOException {
+					launchframe.setInfoText(String.valueOf((char)b));
+			}
+		});
+		System.setOut(printStream);
+		System.setErr(printStream);
+		//Logger log = Logger.getLogger(MCLauncherAPI.class.getName());
+		SimpleFormatter fmt = new SimpleFormatter();
+		StreamHandler sh = new StreamHandler(System.out, fmt);
+		MCLauncherAPI.log.addHandler(sh);
+		
     	launchframe.setInfoText("Creating minecraftLauncherBackend");
         minecraftLauncherBackend = new MinecraftLauncherBackend(Platform.getCurrentPlatform().getWorkingDirectory());
 
@@ -40,7 +59,7 @@ public class GameLauncher extends Thread{
 			e.printStackTrace();
 		}
 		
-		launchframe.setInfoText("Updating assets...<br>This could take a while. The program is not frozen.");
+		launchframe.setInfoText("Updating assets...\n\rThis could take a while. The program is not frozen.");
 		try {
 			updater.join();
 		} catch (InterruptedException e1) {

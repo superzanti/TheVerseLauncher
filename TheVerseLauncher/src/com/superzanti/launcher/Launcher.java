@@ -2,10 +2,18 @@ package com.superzanti.launcher;
 
 import java.io.File;
 import java.io.IOException;
+import java.io.OutputStream;
+import java.io.PrintStream;
 import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.nio.file.StandardCopyOption;
+import java.util.logging.SimpleFormatter;
+import java.util.logging.StreamHandler;
+
+
 import com.superzanti.launcher.gui.LoginFrame;
+
+import sk.tomsik68.mclauncher.api.common.MCLauncherAPI;
 public class Launcher {
 	
 	public static String LAUNCHER_VERSION = "0.000";
@@ -25,9 +33,24 @@ public class Launcher {
 		}
 		GameUpdater updater;
 		updater = new GameUpdater();
-		updater.start();
 		LoginFrame loginFrame = new LoginFrame(updater);
+		updater.setFrame(loginFrame);
+		updater.start();
 		loginFrame.setVisible(true);
 		loginFrame.setValues();
+		
+		PrintStream printStream = new PrintStream(new OutputStream()
+		{
+			@Override
+	        public void write(int b) throws IOException {
+				loginFrame.setInfoText(String.valueOf((char)b));
+			}
+		});
+		System.setOut(printStream);
+		System.setErr(printStream);
+		//Logger log = Logger.getLogger(MCLauncherAPI.class.getName());
+		SimpleFormatter fmt = new SimpleFormatter();
+		StreamHandler sh = new StreamHandler(System.out, fmt);
+		MCLauncherAPI.log.addHandler(sh);
 	}
 }
