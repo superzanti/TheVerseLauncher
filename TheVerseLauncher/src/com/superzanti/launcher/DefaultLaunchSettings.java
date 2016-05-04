@@ -18,6 +18,8 @@ final class DefaultLaunchSettings implements ILaunchSettings {
     	if ((System.getProperty("os.arch").contains("64")) && (System.getProperty("sun.arch.data.model").contains("64")))
     		return "4G";
     	else
+    		// This is too low and the game will probably crash
+    		// Fornow users must have 64 bit java 8 installed
     		return "1280M";
     }
 

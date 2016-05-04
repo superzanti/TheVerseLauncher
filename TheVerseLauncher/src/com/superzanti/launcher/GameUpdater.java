@@ -86,7 +86,7 @@ public class GameUpdater extends Thread {
         
         while(true){
 	        try {
-	        	System.out.println("BUUUUTS");
+	        	System.out.println("Starting Pull");
 				doPull(remotePath, localPath);
 				break;
 			} catch (Throwable e) {
@@ -166,7 +166,7 @@ public class GameUpdater extends Thread {
 		    if (string.startsWith("data/.minecraft/local"))
 		        iterator.remove();
 		}
-		git.clean().setPaths(files).setIgnore(false).setCleanDirectories(true).setDryRun(true).call();
+		git.clean().setPaths(files).setIgnore(false).setCleanDirectories(true).call();
 		
 		git.pull().setProgressMonitor(new TextProgressMonitor(new OutputStreamWriter(System.out))).call();
 		

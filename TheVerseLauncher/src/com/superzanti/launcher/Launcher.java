@@ -38,7 +38,7 @@ public class Launcher {
 		updater = new GameUpdater();
 		LoginFrame loginFrame = new LoginFrame(updater);
 		updater.setFrame(loginFrame);
-		//updater.start();
+		updater.start();
 		loginFrame.setVisible(true);
 		loginFrame.setValues();
 		try {
