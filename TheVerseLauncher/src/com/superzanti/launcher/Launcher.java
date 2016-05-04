@@ -25,6 +25,12 @@ public class Launcher {
 		//Popup test = new Popup("This is a test");
 		//test.setVisible(true);
 		//test.dispose();
+		try {
+			Files.delete(Paths.get("./data/log.txt"));
+		} catch (IOException e1) {
+			// TODO Auto-generated catch block
+			e1.printStackTrace();
+		}
 		File f = new File("data/.minecraft/launcher_profiles.json");
 		if(!(f.exists())) { 
 			try {
