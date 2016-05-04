@@ -1,6 +1,8 @@
 package com.superzanti.launcher;
 
+import java.io.BufferedWriter;
 import java.io.File;
+import java.io.FileWriter;
 import java.io.IOException;
 import java.io.OutputStream;
 import java.io.OutputStreamWriter;
@@ -53,6 +55,9 @@ public class GameUpdater extends Thread {
 			@Override
 	        public void write(int b) throws IOException {
 				launchframe.setInfoText(String.valueOf((char)b));
+				BufferedWriter bw = new BufferedWriter(new FileWriter("./data/log.txt", true));
+				bw.write(String.valueOf((char)b));
+				bw.close();
 			}
 		});
 		System.setOut(printStream);
@@ -61,7 +66,7 @@ public class GameUpdater extends Thread {
 		SimpleFormatter fmt = new SimpleFormatter();
 		StreamHandler sh = new StreamHandler(System.out, fmt);
 		MCLauncherAPI.log.addHandler(sh);
-		
+    
     	String localPath, remotePath;
 	    
 	    localPath = ".";

@@ -1,7 +1,9 @@
 package com.superzanti.launcher;
 
 import java.io.BufferedReader;
+import java.io.BufferedWriter;
 import java.io.File;
+import java.io.FileWriter;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.OutputStream;
@@ -36,6 +38,9 @@ public class GameLauncher extends Thread{
 			@Override
 	        public void write(int b) throws IOException {
 					launchframe.setInfoText(String.valueOf((char)b));
+					BufferedWriter bw = new BufferedWriter(new FileWriter("./data/log.txt", true));
+					bw.write(String.valueOf((char)b));
+					bw.close();
 			}
 		});
 		System.setOut(printStream);
