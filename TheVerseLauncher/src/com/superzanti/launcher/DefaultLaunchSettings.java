@@ -15,7 +15,10 @@ final class DefaultLaunchSettings implements ILaunchSettings {
 
     @Override
     public String getHeap() {
-        return "3G";
+    	if (System.getProperty("os.arch").contains("64"))
+    		return "4G";
+    	else
+    		return "1280M";
     }
 
     @Override
