@@ -7,6 +7,7 @@ import java.io.PrintStream;
 import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.nio.file.StandardCopyOption;
+import java.util.logging.FileHandler;
 import java.util.logging.SimpleFormatter;
 import java.util.logging.StreamHandler;
 
@@ -52,5 +53,19 @@ public class Launcher {
 		SimpleFormatter fmt = new SimpleFormatter();
 		StreamHandler sh = new StreamHandler(System.out, fmt);
 		MCLauncherAPI.log.addHandler(sh);
+		FileHandler fh;
+		try {  
+
+	        // This block configure the logger with handler and formatter  
+	        fh = new FileHandler("../data/log.txt");  
+	        MCLauncherAPI.log.addHandler(fh);
+	        SimpleFormatter formatter = new SimpleFormatter();  
+	        fh.setFormatter(formatter);  
+
+	    } catch (SecurityException e) {  
+	        e.printStackTrace();  
+	    } catch (IOException e) {  
+	        e.printStackTrace();  
+	    }  
 	}
 }
