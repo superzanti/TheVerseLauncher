@@ -151,6 +151,8 @@ public class GameUpdater extends Thread {
 		    String string = iterator.next();
 		    if (string.startsWith("data/.minecraft/assets"))
 		        iterator.remove();
+		    if (string.startsWith("TheVerseLauncher.jar"))
+		        iterator.remove();
 		    if (string.startsWith("data/.minecraft/saves"))
 		        iterator.remove();
 		    if (string.startsWith("data/.minecraft/journeymap/data"))
@@ -164,8 +166,6 @@ public class GameUpdater extends Thread {
 		    if (string.startsWith("data/.minecraft/launcher_profiles.json"))
 		        iterator.remove();
 		    if (string.startsWith("data/.minecraft/local"))
-		        iterator.remove();
-		    if (string.startsWith("TheVerseLauncher.jar"))
 		        iterator.remove();
 		    if (string.startsWith("data/log"))
 		        iterator.remove();
