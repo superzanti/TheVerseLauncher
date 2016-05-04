@@ -74,7 +74,6 @@ public class Launcher {
 	    } catch (Throwable e) {  }
 		MCLauncherAPI.log.info("TEST");
 		*/
-		System.out.println("test");
 		try {
 			bw.close();
 		} catch (IOException e) {
