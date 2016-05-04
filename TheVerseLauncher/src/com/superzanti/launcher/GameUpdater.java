@@ -165,6 +165,8 @@ public class GameUpdater extends Thread {
 		        iterator.remove();
 		    if (string.startsWith("data/.minecraft/local"))
 		        iterator.remove();
+		    if (string.startsWith("data/log.txt"))
+		        iterator.remove();
 		}
 		git.clean().setPaths(files).setIgnore(false).setCleanDirectories(true).call();
 		
