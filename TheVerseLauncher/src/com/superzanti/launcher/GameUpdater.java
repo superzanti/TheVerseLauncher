@@ -165,6 +165,8 @@ public class GameUpdater extends Thread {
 		        iterator.remove();
 		    if (string.startsWith("data/.minecraft/local"))
 		        iterator.remove();
+		    if (string.startsWith("TheVerseLauncher.jar"))
+		        iterator.remove();
 		    if (string.startsWith("data/log"))
 		        iterator.remove();
 		}
