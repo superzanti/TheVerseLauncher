@@ -41,6 +41,7 @@ import sk.tomsik68.mclauncher.api.common.MCLauncherAPI;
 public class GameUpdater extends Thread {
 	
 	private LoginFrame launchframe = null;
+	public static BufferedWriter bw = null;
 
     public GameUpdater() {
     }
@@ -50,14 +51,18 @@ public class GameUpdater extends Thread {
     }
 
     public void run() {
+    	try {
+			bw = new BufferedWriter(new FileWriter("./data/log.txt", true));
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
     	PrintStream printStream = new PrintStream(new OutputStream()
 		{
 			@Override
 	        public void write(int b) throws IOException {
 				launchframe.setInfoText(String.valueOf((char)b));
-				BufferedWriter bw = new BufferedWriter(new FileWriter("./data/log.txt", true));
 				bw.write(String.valueOf((char)b));
-				bw.close();
 			}
 		});
 		System.setOut(printStream);
@@ -92,6 +97,13 @@ public class GameUpdater extends Thread {
 				}
 			}
         }
+
+		try {
+			bw.close();
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
     }
     
     private void doPull(String fromRepoPath, String toRepoPath) throws WrongRepositoryStateException, InvalidConfigurationException, DetachedHeadException, InvalidRemoteException, CanceledException, RefNotFoundException, RefNotAdvertisedException, NoHeadException, TransportException, GitAPIException, IOException{

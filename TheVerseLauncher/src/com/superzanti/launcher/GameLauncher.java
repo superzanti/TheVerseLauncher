@@ -25,6 +25,7 @@ public class GameLauncher extends Thread{
     private ISession session = null;
     private LoginFrame launchframe = null;
     private GameUpdater updater = null;
+    public static BufferedWriter bw = null;
 
     public GameLauncher(ISession sess, LoginFrame frame, GameUpdater update) {
     	session = sess;
@@ -33,14 +34,18 @@ public class GameLauncher extends Thread{
     }
 
     public void run() {
+    	try {
+			bw = new BufferedWriter(new FileWriter("./data/log.txt", true));
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
     	PrintStream printStream = new PrintStream(new OutputStream()
 		{
 			@Override
 	        public void write(int b) throws IOException {
 					launchframe.setInfoText(String.valueOf((char)b));
-					BufferedWriter bw = new BufferedWriter(new FileWriter("./data/log.txt", true));
 					bw.write(String.valueOf((char)b));
-					bw.close();
 			}
 		});
 		System.setOut(printStream);
@@ -117,6 +122,14 @@ public class GameLauncher extends Thread{
             }
         }
         launchframe.dispose();
+
+		try {
+			bw.close();
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
         return;
     }
 

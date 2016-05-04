@@ -15,7 +15,7 @@ final class DefaultLaunchSettings implements ILaunchSettings {
 
     @Override
     public String getHeap() {
-        return "4G";
+        return "3G";
     }
 
     @Override

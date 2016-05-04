@@ -19,6 +19,7 @@ import sk.tomsik68.mclauncher.api.common.MCLauncherAPI;
 public class Launcher {
 	
 	public static String LAUNCHER_VERSION = "0.000";
+	public static BufferedWriter bw = null;
 	
 	public static void main(String[] args) {
 		//Popup test = new Popup("This is a test");
@@ -40,15 +41,18 @@ public class Launcher {
 		//updater.start();
 		loginFrame.setVisible(true);
 		loginFrame.setValues();
-		
+		try {
+			bw = new BufferedWriter(new FileWriter("./data/log.txt", true));
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 		PrintStream printStream = new PrintStream(new OutputStream()
 		{
 			@Override
 	        public void write(int b) throws IOException {
 				loginFrame.setInfoText(String.valueOf((char)b));
-				BufferedWriter bw = new BufferedWriter(new FileWriter("./data/log.txt", true));
 				bw.write(String.valueOf((char)b));
-				bw.close();
 			}
 		});
 		System.setOut(printStream);
@@ -71,5 +75,11 @@ public class Launcher {
 		MCLauncherAPI.log.info("TEST");
 		*/
 		System.out.println("test");
+		try {
+			bw.close();
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 	}
 }
