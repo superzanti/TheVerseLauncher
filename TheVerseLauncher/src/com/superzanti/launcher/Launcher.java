@@ -52,7 +52,7 @@ public class Launcher {
 			@Override
 	        public void write(int b) throws IOException {
 				loginFrame.setInfoText(String.valueOf((char)b));
-				//bw.write(String.valueOf((char)b));
+				bw.write(String.valueOf((char)b));
 			}
 		});
 		System.setOut(printStream);

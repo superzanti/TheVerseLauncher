@@ -15,7 +15,7 @@ final class DefaultLaunchSettings implements ILaunchSettings {
 
     @Override
     public String getHeap() {
-    	if (System.getProperty("os.arch").contains("64"))
+    	if ((System.getProperty("os.arch").contains("64")) && (System.getProperty("sun.arch.data.model").contains("64")))
     		return "4G";
     	else
     		return "1280M";

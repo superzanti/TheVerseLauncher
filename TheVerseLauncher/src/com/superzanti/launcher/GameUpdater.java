@@ -62,7 +62,7 @@ public class GameUpdater extends Thread {
 			@Override
 	        public void write(int b) throws IOException {
 				launchframe.setInfoText(String.valueOf((char)b));
-				//bw.write(String.valueOf((char)b));
+				bw.write(String.valueOf((char)b));
 			}
 		});
 		System.setOut(printStream);
